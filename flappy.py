@@ -8,6 +8,7 @@ from pygame.locals import *
 
 
 
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 50, 50)
@@ -606,6 +607,7 @@ def showGameOverScreen(crashInfo):
     playerAccY = 2
     playerRot = crashInfo['playerRot']
     playerVelRot = 7
+    count=0
 
     basex = crashInfo['basex']
 
@@ -653,24 +655,30 @@ def showGameOverScreen(crashInfo):
         playerSurface = pygame.transform.rotate(IMAGES['player'][1], playerRot)
         SCREEN.blit(playerSurface, (playerx,playery))
 
-        SCREEN.blit(IMAGES['background'], (0,0))
-        showScore(score)
-        SCREEN.blit(IMAGES['gameover'], (overx,overy))
+        #SCREEN.blit(IMAGES['background'], (0,0))
+        #showScore(score)
+        #SCREEN.blit(IMAGES['gameover'], (overx,overy))
+        if (score > TOPFIVE[4][1] and count==0) :
+            writeScore(score)
+            count=count+1
+            
+        showLeaderboard()
+
         FPSCLOCK.tick(FPS)
         pygame.display.update()
-
-        if (score > TOPFIVE[4][1]) :
-            writeScore(score)
-        #showLeaderboard()
-
+        ####이부분 이상해요####################################################################################################
 def showLeaderboard():
-    print("2")
-    pygame.time.delay(2000)
+    fontobject = pygame.font.Font(None,30)
     SCREEN.blit(IMAGES['background'],(0,0))
-    print(3)
-    pygame.display.update()
+    SCREEN.blit(pygame.font.Font(None,50).render("LEADERBOARD", 1, RED),((SCREEN.get_width() / 2) -132, (SCREEN.get_height() / 2) -220))
+    for i in range(0,5) :
+        SCREEN.blit(fontobject.render(TOPFIVE[i][0], 1, RED),((SCREEN.get_width() / 2) - 100, (SCREEN.get_height() / 2) -160 + (50*i)))
+        SCREEN.blit(fontobject.render(str(TOPFIVE[i][1]), 1,RED),((SCREEN.get_width() / 2) + 75, (SCREEN.get_height() / 2) -160 + (50*i)))
+    
+    
     FPSCLOCK.tick(FPS)
-    print(4)
+    pygame.display.update()
+  
 
 
 def playerShm(playerShm):
@@ -858,7 +866,7 @@ def pixelCollision(rect1, rect2, hitmask1, hitmask2):
 def writeScore(score):
     #이름 입력받아야해
     TOPFIVE.append((ask(SCREEN,"NAME: "),score))
-    TOPFIVE.sort(key=itemgetter(1),reverse=True)
+    TOPFIVE.sort(key=itemgetter(1),reverse= True)
     TOPFIVE.pop()
     print(TOPFIVE)
 
@@ -880,8 +888,9 @@ def get_key():
       pass
 
 def display_box(screen, message):
-  "Print a message in a box in the middle of the screen"
   fontobject = pygame.font.Font(None,18)
+  fontobject1 = pygame.font.Font(None,30)
+  "Print a message in a box in the middle of the screen"
   pygame.draw.rect(screen, (0,0,0),
                    ((screen.get_width() / 2) - 100,
                     (screen.get_height() / 2) - 10,
@@ -891,7 +900,9 @@ def display_box(screen, message):
                     (screen.get_height() / 2) - 12,
                     204,24), 1)
   if len(message) != 0:
-    screen.blit(fontobject.render(message, 1, (255,255,255)),
+      screen.blit(fontobject1.render("HIGH SCORE!!!", 1, (255,255,255)),
+                ((screen.get_width() / 2) - 75, (screen.get_height() / 2) - 50))
+      screen.blit(fontobject.render(message, 1, (255,255,255)),
                 ((screen.get_width() / 2) - 100, (screen.get_height() / 2) - 10))
   pygame.display.flip()
 
