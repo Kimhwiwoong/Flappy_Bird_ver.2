@@ -638,7 +638,9 @@ def showGameOverScreen(crashInfo):
                 playerRot -= playerVelRot
 
         # draw sprites
-        SCREEN.blit(IMAGES['background'], (0,0))
+        overx = int((SCREENWIDTH - IMAGES['gameover'].get_width()) / 2)
+        overy = int(SCREENHEIGHT * 0.5)
+        #SCREEN.blit(IMAGES['background'], (0,0))
 
         for uPipe, lPipe in zip(upperPipes, lowerPipes):
             SCREEN.blit(IMAGES['pipe'][0], (uPipe['x'], uPipe['y']))
@@ -649,12 +651,21 @@ def showGameOverScreen(crashInfo):
 
         playerSurface = pygame.transform.rotate(IMAGES['player'][1], playerRot)
         SCREEN.blit(playerSurface, (playerx,playery))
-        showLeaderboard()
-        FPSCLOCK.tick(FPS)
+        
+        SCREEN.blit(IMAGES['background'], (0,0))
+        showScore(score)
+        SCREEN.blit(IMAGES['gameover'], (overx,overy))
+
         pygame.display.update()
 
+        pygame.time.delay(2000)
+        showLeaderboard()
+
+
 def showLeaderboard():
-    SCREEN.blit(IMAGES['background'],(0,0))              
+    SCREEN.blit(IMAGES['background'],(0,0))
+    FPSCLOCK.tick(FPS)
+    pygame.display.update()
 
 
 def playerShm(playerShm):
