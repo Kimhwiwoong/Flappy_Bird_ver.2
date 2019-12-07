@@ -658,8 +658,9 @@ def showGameOverScreen(crashInfo):
         SCREEN.blit(IMAGES['gameover'], (overx,overy))
         FPSCLOCK.tick(FPS)
         pygame.display.update()
-        
-        print(ask(SCREEN,"NAME")+" was entered")
+
+        if (score > TOPFIVE[4][1]) :
+            writeScore(score)
         #showLeaderboard()
 
 def showLeaderboard():
@@ -856,9 +857,10 @@ def pixelCollision(rect1, rect2, hitmask1, hitmask2):
 
 def writeScore(score):
     #이름 입력받아야해
-    TOPFIVE.append(('lee',score))
+    TOPFIVE.append((ask(SCREEN,"NAME: "),score))
     TOPFIVE.sort(key=itemgetter(1),reverse=True)
     TOPFIVE.pop()
+    print(TOPFIVE)
 
 def getHitmask(image):
     """returns a hitmask using an image's alpha."""

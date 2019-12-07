@@ -4,3 +4,5 @@ TOPFIVE.append(('lee',1))
 TOPFIVE.sort(key=itemgetter(1),reverse=True)
 TOPFIVE.pop()
 print(TOPFIVE)
+if(TOPFIVE[4][1] < 100):
+    print("!!")
