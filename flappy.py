@@ -5,7 +5,7 @@ import sys
 import math
 import pygame
 from pygame.locals import *
-
+import time
 
 
 
@@ -608,6 +608,7 @@ def showGameOverScreen(crashInfo):
     playerRot = crashInfo['playerRot']
     playerVelRot = 7
     count=0
+    gameover = True
 
     basex = crashInfo['basex']
 
@@ -655,13 +656,26 @@ def showGameOverScreen(crashInfo):
         playerSurface = pygame.transform.rotate(IMAGES['player'][1], playerRot)
         SCREEN.blit(playerSurface, (playerx,playery))
 
-        #SCREEN.blit(IMAGES['background'], (0,0))
+        
         #showScore(score)
-        #SCREEN.blit(IMAGES['gameover'], (overx,overy))
+       
+        
         if (score > TOPFIVE[4][1] and count==0) :
+            SCREEN.blit(IMAGES['gameover'], (overx,overy))
+            pygame.display.update()
+            gameover = False
+            pygame.time.delay(1000)
+            
+            SCREEN.blit(IMAGES['background'], (0,0))
             writeScore(score)
             count=count+1
-            
+            pygame.display.update()
+        elif(gameover == True):
+             SCREEN.blit(IMAGES['gameover'], (overx,overy))
+             pygame.display.update()
+             gameover = False
+             pygame.time.delay(1000)
+             
         showLeaderboard()
 
         FPSCLOCK.tick(FPS)
