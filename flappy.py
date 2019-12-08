@@ -680,7 +680,7 @@ def showGameOverScreen(crashInfo):
 
         FPSCLOCK.tick(FPS)
         pygame.display.update()
-        ####이부분 이상해요####################################################################################################
+
 def showLeaderboard():
     fontobject = pygame.font.Font(None,30)
     SCREEN.blit(IMAGES['background'],(0,0))
@@ -875,14 +875,14 @@ def pixelCollision(rect1, rect2, hitmask1, hitmask2):
                 return True
     return False
 
-#게임오버화면 들어가기 전에 아래 함수 써줘야함
+
 
 def writeScore(score):
-    #이름 입력받아야해
+    
     TOPFIVE.append((ask(SCREEN,"NAME: "),score))
     TOPFIVE.sort(key=itemgetter(1),reverse= True)
     TOPFIVE.pop()
-    print(TOPFIVE)
+   
 
 def getHitmask(image):
     """returns a hitmask using an image's alpha."""
